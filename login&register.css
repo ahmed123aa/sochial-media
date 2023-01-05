@@ -64,9 +64,8 @@ section >div:nth-child(2) input{
     border-radius: 5px;
     border: 1px solid #CACACA;
     padding-left: 15px;
-    text-transform: capitalize;
-    font-size: 16px;
-    font-weight: 400;
+    /* font-size: 16px; */
+    /* font-weight: 400; */
 }
 section >div:nth-child(2) a::first-letter,
 section >div:nth-child(3) span::first-letter{

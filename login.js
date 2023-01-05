@@ -10,32 +10,33 @@ e.addEventListener("click", () =>{
     }
 })
 // ---------show and hidden pass => end-----------
-
-
 // ---------send data from login => start--------- 
 
 let login = document.getElementById("login")
 login.addEventListener("click",function(){
-    let email = document.getElementById("email").value
+    let UserName = document.getElementById("UserName").value
     let password = document.getElementById("password").value    
-        let req =new XMLHttpRequest()
-    req.open("POST","https://reqres.in/api/login")
-    let body = JSON.stringify({ 
-      "email":email,
-      "password":password
-      }) 
+    let req =new XMLHttpRequest()
+    req.open("POST"," https://tarmeezacademy.com/api/v1/login")
+    req.setRequestHeader("Accept", "application/json");
+    req.setRequestHeader("Content-type","application/json");
+    let body = JSON.stringify({
+        "username":UserName,
+        "password":password,
+    })
+    // "username":"ahmeddd123",
+    // "password": "123456789",
+    // "name":"ali"
     req.send(body)
     req.onload = function(){
-      if(req.status >=200 && req.status <300 ){
+        if(req.status >=200 && req.status <300 ){
         let responseSucsees = JSON.parse(req.response)
-        console.log(`response is Sucsees:. ${req.status} `)
-        window.localStorage.setItem("token",responseSucsees.data.token)
+        // window.localStorage.setItem("token",JSON.stringify(req.response))
+        // location.href= "../login and rigester/home.html"
     }else{
-        console.log(`response is unSucsees:. ${req.status} `)
         let responseUnsucsees = JSON.parse(req.response)
-        console.log(responseUnsucsees.error)
-        location.href= "../login and rigester/welcome.html"
-
+        alert(responseUnsucsees.error)
+        console.log(`response is unSucsees:. status ${req.status}  readyState  ${req.readyState} `)
     }
 }
 }
@@ -43,45 +44,9 @@ login.addEventListener("click",function(){
 
 
 
-// // reqLogin
-// function reqLogin(){
-//     let req =new XMLHttpRequest()
-//     req.open("POST","https://reqres.in/api/login")
-//     let body = JSON.stringify({ 
-//       "email": 
-//       "password": 
-//       }) 
-//     req.send(body)
-//     req.onload = function(){
-//       if(req.status >=200 && req.status <300 ){
-//         let responseSucsees = JSON.parse(req.response)
-//         console.log(`response is Sucsees:. ${req.status} `)
-//         window.localStorage.setItem("token",responseSucsees.data.token)
-//     }else{
-//         console.log(`response is unSucsees:. ${req.status} `)
-//         let responseUnsucsees = JSON.parse(req.response)
-//         console.log(responseUnsucsees.error)
-//       }
-//     }
-// }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// window.localStorage.clear()
 
