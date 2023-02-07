@@ -8,10 +8,13 @@
     <link rel="stylesheet" href="../login and rigester/home.css">
     <!-- fonts.google -->
     <link href="https://fonts.googleapis.com/css2?family=BhuTuka+Expanded+One&family=Dancing+Script&display=swap" rel="stylesheet"> 
+    <!-- axios -->
+    <script src="../login and rigester/node_modules/axios/dist/axios.min.js"></script>
+
     <title>welcome</title>
 </head>
 <body>
- <div class="home">
+  <div id="home" class="home">
     <header>
         <div>
             <span>our world</span>
@@ -25,7 +28,8 @@
         <div>
           <div>
             <button id="login">login</button>
-            <div class="cont-imge-profile"><img class="imge-pro" src="file:///C:/Users/Black%20Horse/Desktop/webs/pictures/255102914_1418254615243946_3157813420997906125_n.jpg"></div>
+            <button id="logout" onclick=" logout()">logout</button>
+            <div class="cont-imge-profile"><img class="imge-pro" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05q_vg5Ux_rPqNDBBeYLc1BHrG-qjaw7_tA&usqp=CAU"></div>
           </div>
         </div>
     </header>
@@ -33,9 +37,9 @@
    <aside>
     <div class="cont-sidbar">
         <div>
-            <div><img class="imge-pro" src="file:///C:/Users/Black%20Horse/Desktop/webs/pictures/255102914_1418254615243946_3157813420997906125_n.jpg"></div>
+            <div><img class="imge-pro" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05q_vg5Ux_rPqNDBBeYLc1BHrG-qjaw7_tA&usqp=CAU"></div>
             <div class="name">
-                <p>ahmed abdo</p>
+                <p id="namePerson">.......</p>
                 <p>@dayi</p>
             </div>
         </div>
@@ -90,8 +94,8 @@
             </div>
           
         </div>
-        <div class="creatPost-sid">
-            <span>creat post</span>
+        <div class="new-post creatPost-sid">
+            <span onclick="creatPost ()">creat post</span>
         </div>
     
     </div>
@@ -122,20 +126,58 @@
         </div>
         
         
-        <div class="creat-post">
-            <div><img class="imge-pro" src="file:///C:/Users/Black%20Horse/Desktop/webs/pictures/255102914_1418254615243946_3157813420997906125_n.jpg"></div>
-            <textarea placeholder="what is on your mind, ahmed"></textarea>
-            <button>post</button>
+        <div class="new-post creat-post">
+            <div><img class="imge-pro" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05q_vg5Ux_rPqNDBBeYLc1BHrG-qjaw7_tA&usqp=CAU"></div>
+            <textarea id="whatIsOnYourMind" placeholder=""></textarea>
+            <button onclick="creatPost()"> post</button>
         </div>
-
-
         <!-- dynamik posts by js -->
         <!-- <div class="cont-post">
         </div> -->          
     </div>
     <!-- for messge and requsts  -->
-    <div></div>
+    <div class="requsts"></div>
    </div>
+ </div>
+ <div id="countMessage">
+    <!-- <div id="message">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_wbBfnys5rxvgITJDUK-vKqPbaCW2rKSp-w&usqp=CAU">
+        <p id="contentMessage">your /..../ has been confirmed</p>
+     </div> -->
+ </div>
+ <div id="model" class="model-creat">
+    <div>
+        <p>creat post</p>
+        <span id="close-model-1">x</span>
+    </div>
+    <div>
+        <div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05q_vg5Ux_rPqNDBBeYLc1BHrG-qjaw7_tA&usqp=CAU">
+        </div>
+        <div>
+            <p>ahmed abdo</p>
+            <p>public</p>
+        </div>
+    </div>
+    <div>
+        <div>
+            <label>title:</label>
+            <input id="title" type="text"> 
+            <label>content:</label>
+            <input id="content"  type="text"></input>
+        </div>
+        <div>
+            <label> image:</label>
+            <!-- <div class="contChooseImage">
+                <button class="chosseFile">chosse file</button>
+            </div> -->
+            <input id="fileImage" class="filee" type="file">
+        </div>
+    </div>
+    <div>
+        <button id="close-model-2">close</button>
+        <button id="craetPostt">creat</button>
+    </div>
  </div>
 
 
@@ -157,7 +199,9 @@
 
 
 
-
+    <script>
+       
+    </script>
     <script src="../login and rigester/home.js"></script>
 </body>
 </html>

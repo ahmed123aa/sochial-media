@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../login and rigester/login&register.css">
+    <script src="../login and rigester/node_modules/axios/dist/axios.min.js"></script>
+
     <title>rigster</title>
 </head>
 <body>
@@ -14,15 +16,15 @@
         <span>signup</span>
     </div>
     <div>
-        <input type="text" placeholder="email">
+        <input id="username-signup" type="text" placeholder="username" value="said10">
         <!-- <div> -->
-        <img class="eyee shHi" src="https://icons-for-free.com/iconfiles/png/512/hidden+icon-1320183614047893754.png">
-        <input type="password" placeholder="password">
+            <img class="eyee shHi" src="https://icons-for-free.com/iconfiles/png/512/hidden+icon-1320183614047893754.png">
+            <input id="password-signup" type="password" placeholder="password" value="123456">
+            <input  id="name-signup" type="text" placeholder="name" value="said">
         <!-- </div> -->
-        <input type="password" placeholder="confirm password">
     </div>
     <div>
-        <button>signup</button>
+        <button id="signup">signup</button>
         <span>do not have an account?<a href="../login and rigester/login.html"> login</a></span>
     </div>
     <div>
@@ -38,6 +40,14 @@
       </div>
     </div>
 </section>
+<div id="countMessage">
+    <!-- <div id="message">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_wbBfnys5rxvgITJDUK-vKqPbaCW2rKSp-w&usqp=CAU">
+        <p id="contentMessage">your /..../ has been confirmed</p>
+     </div> -->
+ </div>
+
+<!-- <script src="../login and rigester/home.js"></script> -->
 <script src="../login and rigester/login.js"></script>
 </body>
 </html>

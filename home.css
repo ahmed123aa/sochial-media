@@ -7,6 +7,7 @@
 }
 :root{
     --colorSearch :rgb(217, 209, 209);
+    --buttons :brown;
 }
 button{
     border: none;
@@ -30,6 +31,10 @@ input:focus{
 }
 /* ************************************************************************************* */
 
+.home{
+    transition:  filter 2s  2s ease-in-out ;
+
+}
 header{
     position: sticky;
     left: 0px;
@@ -39,6 +44,7 @@ header{
     background-color: white;
     display: flex;
     z-index: 1;
+    /* filter: blur(3px); */
 }
 header >div:first-child{
     width: 35%;
@@ -95,7 +101,7 @@ header >div:nth-child(3) >div {
 
 }
 header >div:nth-child(3) >div button,.creat-post button{
-    background-color: brown;
+    background-color: var(--buttons);
     width: 80px;
     height: 30px;
     border-radius: 20px;
@@ -122,6 +128,7 @@ aside{
     background-color: var(--colorSearch);
     position: fixed;
     top: 50px;
+    /* filter: blur(3px); */
 }
 .cont-sidbar{
     width: 65%;
@@ -241,14 +248,14 @@ aside{
 }
 .active{
     background-color: var(--colorSearch);
-    color: brown;
-    border-left: 5px solid brown;
+    color: var(--buttons);
+    border-left: 5px solid var(--buttons);
 }
 /* ************************************* */
 .creatPost-sid{
     width: 90%;
     height: 8%;
-    background-color: brown;
+    background-color: var(--buttons);
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -271,6 +278,7 @@ aside{
     margin-left: 35%;
     display: flex;
     flex-wrap: wrap;
+    /* filter: blur(3px); */
 }
 
 .countner >div:first-child{
@@ -487,7 +495,7 @@ aside{
 /* ************************* */
 /* ************************* */
 /* ************************* */
-
+/* actions And Tags */
 .actionsAndTags{
     width: 100%;
     height: 50px;
@@ -532,6 +540,249 @@ aside{
 .tags >div span{
     font-family: Arial, Helvetica, sans-serif;
 }
+/* todo => i wanna make it smooth */
+/* #countMessage{
+    transition: ;
+} */
+/* alert message */
+#message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 290px;
+    height: 50px;
+    position: fixed;
+    right: 10px;
+    bottom: 50px;
+    border-bottom: 5px red solid;
+}
+
+#message p{
+    font-size: 17px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 5px;
+}
+#message p::first-letter{
+    text-transform: capitalize;
+}
+#message img{
+    width: 25px;
+    height: 30px;
+}
+/* model creat */
+.model-creat{
+    visibility: hidden;
+    transition: visibility  1s 1s ease-in-out ;
+    /* filter: none; */
+    width: 450px;
+    height: 550px;
+    /* background-color: red; */
+    background-color:white;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    z-index: 11;
+}
+.model-creat >div:first-child{
+    width: 100%;
+    height: 10%;
+    /* background-color: blue; */
+    position: relative;
+    
+}
+.model-creat >div:first-child p{
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    text-align: center;
+    line-height: 300%;
+    text-transform: capitalize;
+}
+.model-creat >div:first-child span{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 17.5px;
+    text-align: center;
+    line-height: 35px;
+    /* font-weight: 100; */
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    background-color: var(--colorSearch);
+    cursor: pointer;
+}
+.model-creat >div:first-child::after{
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 450px;
+    height: 2px;
+    background-color: var(--colorSearch);
+    /* background-color: red; */
+}
+.model-creat >div:nth-child(2){
+    width: 100%;
+    height: 20%;
+    /* background-color: wheat; */
+    display: flex;
+    align-items: center;
+}
+.model-creat >div:nth-child(2) >div:first-child{
+    width: 90px;
+    height: 70px;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.model-creat >div:nth-child(2) >div:first-child img{
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+}
+.model-creat >div:nth-child(2) >div:nth-child(2){
+    width: 200px;
+    height: 70px;
+    /* background-color: rgb(138, 127, 127); */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+}
+.model-creat >div:nth-child(2) >div:nth-child(2) p{
+    padding-left: 10px;
+    padding-top: 10px;
+    text-transform: capitalize;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+}
+.model-creat >div:nth-child(2) >div:nth-child(2) p:nth-child(2){
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: var(--colorSearch);
+    text-align: center;
+    line-height: 10px ;
+    font-size: 15px;
+}
+.model-creat >div:nth-child(3){
+    width: 100%;
+    height: 60%;
+    /* background-color: salmon; */
+    display: flex;
+    flex-wrap: wrap;
+}
+.model-creat >div:nth-child(3) >div:first-child{
+    width: 100%;
+    height: 70%;
+    /* background-color: rgb(0, 89, 255); */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+.model-creat >div:nth-child(3) >div:first-child label{
+    text-transform: capitalize;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    /* font-weight: 600; */
+    margin-right: 75%;
+}
+.model-creat >div:nth-child(3) >div:first-child label:first-child{
+    padding-right:29px;
+}
+.model-creat >div:nth-child(3) >div:first-child input{
+    width: 90%;
+    height: 40px;
+    border-radius: 10px;
+}
+.model-creat >div:nth-child(3) >div:first-child input:nth-of-type(2){
+    width: 90%;
+    height: 100px;
+    resize: none;
+    border: none;
+}
+.model-creat >div:nth-child(3) >div:nth-child(2) {
+    /* background-color: blueviolet; */
+    width: 100%;
+    height:30% ;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.model-creat >div:nth-child(3) >div:nth-child(2) label{
+    text-transform: capitalize;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 19px;
+}
+
+/* .contChooseImage {
+    background-color: red;
+    margin-top: 10px;
+    margin-left: 19px;
+}
+.chosseFile{
+    width: 80px;
+    height: 100%;
+} */
+.model-creat >div:nth-child(4){
+    width: 100%;
+    height: 10%;
+    /* background-color: saddlebrown; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.model-creat >div:nth-child(4) button{
+    width: 70px;
+    height: 30px;
+    background-color: var(--buttons);
+    border-radius: 5px;
+    margin: 5px;
+    color: white;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.model-creat >div:nth-child(4) button:nth-child(1){
+    background-color: rgb(44, 43, 43);
+}
+/* filter: blur(10px); */
+
+
+
+
+
+/* .filee { */
+    /* padding-left: 15px; */
+    /* height: 50px; */
+    /* display: none; */
+    /* } */
+    input[type="file"]{
+        font-size: 19px;
+        background-color: white;
+        border-radius: 5px;
+        border: 2px solid rgb(198, 195, 195);
+        width: 90%;
+        margin-left:15px ;
+    }
+    input[type="file"]::-webkit-file-upload-button{
+        background-color: rgb(198, 195, 195);
+        /* border-radius: 5px; */
+        /* style goes here */
+        border: none;
+        width: 120px;
+        height: 40px;
+        cursor: pointer;
+ }
 
 
 
@@ -539,16 +790,6 @@ aside{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+ /* Uncaught TypeError: Cannot set properties of undefined (setting 'visibility') */
 
 
