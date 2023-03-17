@@ -62,6 +62,7 @@ e.addEventListener("click", () =>{
             document.getElementById("countMessage").innerHTML = ""
         },3000)
     }
+     // ---------send data from register => start by axios--------- 
 
      // baseUrl
      let baseUrl = "https://tarmeezacademy.com/api/v1/" 
@@ -71,16 +72,23 @@ e.addEventListener("click", () =>{
          let UserName = document.getElementById("username-signup").value
          let password = document.getElementById("password-signup").value    
          let name = document.getElementById("name-signup").value   
+         let image = document.getElementById("file").files[0]   
          console.log(UserName,name,password)
          // body params
-         let body = {
-             "username":UserName,
-             "password":password,
-             "name":name
-         }
+        //  let body = {
+        //      "username":UserName,
+        //      "password":password,
+        //      "name":name
+        //  }
+        let formData= new FormData()
+        formData.append("username",UserName)
+        formData.append("password",password)
+        formData.append("name",name)
+        formData.append("image",image)
+
          // full url to login
          let url =`${baseUrl}register`
-         axios.post(url,body)
+         axios.post(url,formData)
     .then(response=>{
         // console.log(response.data)
         localStorage.setItem("token",response.data.token)
@@ -96,3 +104,4 @@ e.addEventListener("click", () =>{
  }
  )
 
+     // ---------send data from register => end by axios--------- 

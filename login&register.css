@@ -51,7 +51,7 @@ section >div:first-child{
 /* cont => inputs */
 section >div:nth-child(2){
     width: 100%;
-    height: 150px;
+    height: 200px;
     /* background-color: firebrick; */
     display: flex;
     flex-wrap: wrap;
@@ -239,4 +239,17 @@ section >div:nth-child(4) >div div:nth-child(2) img{
 #message img{
     width: 25px;
     height: 30px;
+}
+input[type="file"]{
+    position: relative;
+}
+input[type="file"]::-webkit-file-upload-button{
+    /* style goes here */
+    background-color: rgb(198, 195, 195);
+    border: none;
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+    position: absolute;
+    left: 0px;
 }
