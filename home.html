@@ -53,7 +53,7 @@
             <div>
                 <div> 
                     <img class="icon-sidbar" src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_explore_48px-512.png" >
-                    <span>explore</span>
+                    <a href="../login and rigester/profile.html"><span>profile</span></a>
                 </div>
             </div>
             <div>
@@ -94,7 +94,7 @@
             </div>
           
         </div>
-        <div class="new-post creatPost-sid">
+        <div id="new-post" class="new-post creatPost-sid">
             <span onclick="creatPost ()">creat post</span>
         </div>
     
@@ -136,7 +136,9 @@
         </div> -->          
     </div>
     <!-- for messge and requsts  -->
-    <div class="requsts"></div>
+    <div class="requsts">
+        
+    </div>    
    </div>
  </div>
  <div id="countMessage">
@@ -147,7 +149,7 @@
  </div>
  <div id="model" class="model-creat">
     <div>
-        <p>creat post</p>
+        <p id="tittlePost">creat post</p>
         <span id="close-model-1">x</span>
     </div>
     <div>
@@ -155,16 +157,16 @@
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05q_vg5Ux_rPqNDBBeYLc1BHrG-qjaw7_tA&usqp=CAU">
         </div>
         <div>
-            <p>ahmed abdo</p>
+            <p id="namePublisher"></p>
             <p>public</p>
         </div>
     </div>
     <div>
         <div>
             <label>title:</label>
-            <input id="title" type="text"> 
+            <input class="titleModel" id="title" type="text"> 
             <label>content:</label>
-            <input id="content"  type="text"></input>
+            <input class="contentModel" id="content"  type="text"></input>
         </div>
         <div>
             <label> image:</label>
@@ -176,26 +178,10 @@
     </div>
     <div>
         <button id="close-model-2">close</button>
-        <button id="craetPostt">creat</button>
+        <button class="craetPosttOrUpdate" id="craetPostt">creat</button>
     </div>
+    <input id="hiddenForId" type="hidden">
  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <script>
@@ -216,6 +202,7 @@ let currentPage = 1
        readPost(currentPage)
             // read Posts
         function readPost(currentPage) {
+
             // Requests => show some posts
         let baseUrl = "https://tarmeezacademy.com/api/v1/posts"
         fetch(`${baseUrl}?page=${currentPage}`)
@@ -225,34 +212,76 @@ let currentPage = 1
         }).then((jsObject)=>{
             last_page = jsObject.meta.last_page
         let data   =  jsObject.data
+        let count =0
         for(let post of data){
-                // let  tagName =[]
+                // let  ta gName =[]
                 // for(tag of post.tags){
                 //     tagName.push(tag.name)
                 // }
                 // if(tagName[2]==undefined){
                 //     tagName[2]=tag.arabic_name
                 // }
+                // let strigObj =JSON.stringify(post) 
+              
+                let edit =""
+                let popp =""
+                
+                if(localStorage.getItem("token") !==null){
+                if(post.author.id==JSON.parse(localStorage.getItem("userData")).id){
+                    count++
+                    edit=`<img id="threeLines" class="threeLines"  onclick="apearPoppSetting (${count})" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEI8WPzGIYKhyNogTncG7fYhEW-1UOTi8YvA&usqp=CAU">`
+                    popp=`
+                        <div style ="visibility: hidden;" id ="menuSetting" class="menuSetting">
+                            <div class="deleteCont">
+                                <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4EMnEciew_onpMaTiS2xtPZxPlw4upCFNpQ&usqp=CAU">
+                                <span>delete</span>
+                            </div>
+                            <div class="updateCont"  onclick="update('${encodeURIComponent(JSON.stringify(post))}')" >
+                                <img src="https://cdn0.iconfinder.com/data/icons/social-media-glyph-1/64/Facebook_Social_Media_User_Interface-41-512.png">
+                                <span>update</span>
+                            </div>
+                            <div>
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWppIpYBlxcjmQ0lRNsZvBWjrrwthDt6_ZKg&usqp=CAU">
+                                <span>hidden</span>
+                            </div>
+                            <span onclick="closeSetting()" class ="closeSetting"> x</span>
+                        </div>
+                        <input type="hidden" value="${count}">
+                    
+                    `
+                }   
+                }  
+
+                if (isObjEmptyPictureProfile (post.image)) {
+                    var imagee = "https://i.pinimg.com/originals/84/2a/d6/842ad68b315b0f586c30b465221da609.jpg"                 
+                }else{
+                    imagee = `"${post.image}"`
+                }
+                if (isObjEmptyPictureProfile (post.author.profile_image)) {
+                    var imageProfile = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05q_vg5Ux_rPqNDBBeYLc1BHrG-qjaw7_tA&usqp=CAU"                 
+                }else{
+                    imageProfile =post.author.profile_image
+                }
                 let titleCont =""
                 if(post.title != null){
                     titleCont =`${ post.title} :`
                 }
                 document.querySelector(".countner >div").innerHTML +=  `
-                <div class="cont-post"  onclick="detailspost (${post.id})" style ="cursor: pointer;">
+                <div  class="cont-post"  >
                     <div>
-                        <div><img class="imge-pro" src="file:///C:/Users/Black%20Horse/Desktop/webs/pictures/255102914_1418254615243946_3157813420997906125_n.jpg"></div>
+                        <div><img class="imge-pro" src="${imageProfile}"></div>
                         <div>
                             <p>${post.author.username}</p>
                             <p>cairo ${post.created_at} </p>
                         </div>
-                        <img class="threeLines" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEI8WPzGIYKhyNogTncG7fYhEW-1UOTi8YvA&usqp=CAU">
+                        ${edit}
                     </div>
-                    <div class="imge-post">
-                        <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ_0egIARAu6k6cg13wstDifbKi9djp4tjhQ&usqp=CAU">
+                    <div class="imge-post" onclick="detailspost (${post.id})" style ="cursor: pointer;">
+                        <img  src=${imagee}>
                     </div>
-                    <div class="body-post"> 
+                    <div class="body-post"  onclick="detailspost (${post.id})" style ="cursor: pointer;"> 
                         <h4>${titleCont}</h4>
-                        <p>${post.body}</p>
+                        <article>${post.body}</article>
                     </div>
                     <div class="actionsAndTags"> 
                         <div class="actions">
@@ -271,6 +300,7 @@ let currentPage = 1
                         </div>
                         
                     </div>
+                    ${popp}
                 </div>
 
                 `
