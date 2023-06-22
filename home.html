@@ -53,7 +53,7 @@
             <div>
                 <div> 
                     <img class="icon-sidbar" src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_explore_48px-512.png" >
-                    <a href="../login and rigester/profile.html"><span>profile</span></a>
+                    <span onclick="myProfile ()">profile</span>
                 </div>
             </div>
             <div>
@@ -182,140 +182,175 @@
     </div>
     <input id="hiddenForId" type="hidden">
  </div>
+ <div class="model-delete">
+    <div>
+        <p>are you confirm to delete this post ?</p>
+    </div>
+    <div>
+        <button onclick="closModelDelete()" id="close-model-3">close</button>
+        <button onclick="deleteConform()">delete</button>
+        <input id="hiddenForIdDelete" type="hidden">
+    </div>
+
+ </div>
+ <div id="loader">
+    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+ </div>
 
 
     <script>
-// ============pagination => start============================================= 
+// ============loader => start============================================= 
+    function loaderToggle(show){
+        let loader = document.getElementById("loader")
+        if(show){
+            loader.style.visibility="visible"
+        }else{
+            loader.style.visibility="hidden"
+        }
+ }
+ // ============loader => end============================================= 
+ // ============pagination => start============================================= 
 let last_page; 
 let currentPage = 1
         window.onscroll = function(ev) {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight &&currentPage<last_page) {
+            let endPage = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight
+            if (endPage && currentPage<last_page) {
                 currentPage++
-                readPost()
-                console.log("bottom")
+                readPost(currentPage)
+                console.log(window.innerHeight)
+                console.log( window.scrollY )
+                console.log( document.body.scrollHeight )
                 console.log("last_page: "+last_page)
                 console.log("currentPage: " +currentPage)
             }
+                // console.log(scrollY)
+                // console.log(window.innerHeight)
+                // console.log(document.documentElement.scrollHeight)
         }
 // ===========pagination => end================================================      
 // ===========show posts => start================================================
-       readPost(currentPage)
-            // read Posts
-        function readPost(currentPage) {
+readPost(currentPage)
+    // read Posts
+    function readPost(currentPage) {
+    // loader
+    loaderToggle(true)
+    // Requests => show some posts
+    let baseUrl = "https://tarmeezacademy.com/api/v1/posts"
+    fetch(`${baseUrl}?page=${currentPage}`)
+    .then((responseJson)=>{
+    return  responseJson.json()
 
-            // Requests => show some posts
-        let baseUrl = "https://tarmeezacademy.com/api/v1/posts"
-        fetch(`${baseUrl}?page=${currentPage}`)
-        .then((responseJson)=>{
-        return  responseJson.json()
-
-        }).then((jsObject)=>{
-            last_page = jsObject.meta.last_page
-        let data   =  jsObject.data
-        let count =0
-        for(let post of data){
-                // let  ta gName =[]
-                // for(tag of post.tags){
-                //     tagName.push(tag.name)
-                // }
-                // if(tagName[2]==undefined){
-                //     tagName[2]=tag.arabic_name
-                // }
-                // let strigObj =JSON.stringify(post) 
-              
-                let edit =""
-                let popp =""
-                
-                if(localStorage.getItem("token") !==null){
-                if(post.author.id==JSON.parse(localStorage.getItem("userData")).id){
-                    count++
-                    edit=`<img id="threeLines" class="threeLines"  onclick="apearPoppSetting (${count})" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEI8WPzGIYKhyNogTncG7fYhEW-1UOTi8YvA&usqp=CAU">`
-                    popp=`
-                        <div style ="visibility: hidden;" id ="menuSetting" class="menuSetting">
-                            <div class="deleteCont">
-                                <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4EMnEciew_onpMaTiS2xtPZxPlw4upCFNpQ&usqp=CAU">
-                                <span>delete</span>
-                            </div>
-                            <div class="updateCont"  onclick="update('${encodeURIComponent(JSON.stringify(post))}')" >
-                                <img src="https://cdn0.iconfinder.com/data/icons/social-media-glyph-1/64/Facebook_Social_Media_User_Interface-41-512.png">
-                                <span>update</span>
-                            </div>
-                            <div>
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWppIpYBlxcjmQ0lRNsZvBWjrrwthDt6_ZKg&usqp=CAU">
-                                <span>hidden</span>
-                            </div>
-                            <span onclick="closeSetting()" class ="closeSetting"> x</span>
+    }).then((jsObject)=>{
+        last_page = jsObject.meta.last_page
+    let data   =  jsObject.data
+    let count =0
+    for(let post of data){
+            // let  ta gName =[]
+            // for(tag of post.tags){
+            //     tagName.push(tag.name)
+            // }
+            // if(tagName[2]==undefined){
+            //     tagName[2]=tag.arabic_name
+            // }
+            // let strigObj =JSON.stringify(post) 
+            
+            let edit =""
+            let popp =""
+            
+            if(localStorage.getItem("token") !==null){
+            if(post.author.id==JSON.parse(localStorage.getItem("userData")).id){
+                count++
+                edit=`<img id="threeLines" class="threeLines"  onclick="apearPoppSetting (${count})" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEI8WPzGIYKhyNogTncG7fYhEW-1UOTi8YvA&usqp=CAU">`
+                popp=`
+                    <div style ="visibility: hidden;" id ="menuSetting" class="menuSetting">
+                        <div class="deleteCont"  onclick="deletePost('${post.id}')">
+                            <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4EMnEciew_onpMaTiS2xtPZxPlw4upCFNpQ&usqp=CAU">
+                            <span>delete</span>
                         </div>
-                        <input type="hidden" value="${count}">
+                        <div class="updateCont"  onclick="update('${encodeURIComponent(JSON.stringify(post))}')" >
+                            <img src="https://cdn0.iconfinder.com/data/icons/social-media-glyph-1/64/Facebook_Social_Media_User_Interface-41-512.png">
+                            <span>update</span>
+                        </div>
+                        <div>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWppIpYBlxcjmQ0lRNsZvBWjrrwthDt6_ZKg&usqp=CAU">
+                            <span>hidden</span>
+                        </div>
+                        <span onclick="closeSetting()" class ="closeSetting"> x</span>
+                    </div>
                     
                     `
-                }   
-                }  
+                    // <input type="hidden" value="${count}">
+            }   
+            }  
 
-                if (isObjEmptyPictureProfile (post.image)) {
-                    var imagee = "https://i.pinimg.com/originals/84/2a/d6/842ad68b315b0f586c30b465221da609.jpg"                 
-                }else{
-                    imagee = `"${post.image}"`
-                }
-                if (isObjEmptyPictureProfile (post.author.profile_image)) {
-                    var imageProfile = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05q_vg5Ux_rPqNDBBeYLc1BHrG-qjaw7_tA&usqp=CAU"                 
-                }else{
-                    imageProfile =post.author.profile_image
-                }
-                let titleCont =""
-                if(post.title != null){
-                    titleCont =`${ post.title} :`
-                }
-                document.querySelector(".countner >div").innerHTML +=  `
-                <div  class="cont-post"  >
+            if (isObjEmptyPictureProfile (post.image)) {
+                var imagee = "https://i.pinimg.com/originals/84/2a/d6/842ad68b315b0f586c30b465221da609.jpg"                 
+            }else{
+                imagee = `"${post.image}"`
+            }
+            if (isObjEmptyPictureProfile (post.author.profile_image)) {
+                var imageProfile = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05q_vg5Ux_rPqNDBBeYLc1BHrG-qjaw7_tA&usqp=CAU"                 
+            }else{
+                imageProfile =post.author.profile_image
+            }
+            let titleCont =""
+            if(post.title != null){
+                titleCont =`${ post.title} :`
+            }
+            // console.log(post)
+            document.querySelector(".countner >div").innerHTML +=  `
+            <div  class="cont-post"  >
+                <div>
+                    <div><img class="imge-pro" onclick="goToProfile (${post.author.id})" style ="cursor: pointer;" src="${imageProfile}"></div>
                     <div>
-                        <div><img class="imge-pro" src="${imageProfile}"></div>
-                        <div>
-                            <p>${post.author.username}</p>
-                            <p>cairo ${post.created_at} </p>
-                        </div>
-                        ${edit}
+                        <p onclick="goToProfile (${post.author.id})" style ="cursor: pointer;">${post.author.username}</p>
+                        <p>cairo ${post.created_at} </p>
                     </div>
-                    <div class="imge-post" onclick="detailspost (${post.id})" style ="cursor: pointer;">
-                        <img  src=${imagee}>
-                    </div>
-                    <div class="body-post"  onclick="detailspost (${post.id})" style ="cursor: pointer;"> 
-                        <h4>${titleCont}</h4>
-                        <article>${post.body}</article>
-                    </div>
-                    <div class="actionsAndTags"> 
-                        <div class="actions">
-                            <div>
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHoAAAB6CAMAAABHh7fWAAAAYFBMVEUAAAD////p6ent7e35+fmHh4e9vb329vaLi4syMjI7OztnZ2dDQ0N0dHTi4uLz8/Ovr69hYWHR0dF8fHzIyMgLCwsqKipUVFQdHR3Z2dm2traioqIUFBRNTU2VlZVsbGxrIfkgAAADrklEQVRoge2a6baqMAyFW2aRWWVwfP+3vChO0Cktga51j/t/8gktdTcJodZEfugf+of+Y2gvdx3HzUPdrOEQ55mhPSeIbk2yads6vmx3RQbkh1nhby9x3babpLlFgSPkC9CVn5CJ6jRQg4O0nsYlfgVHeycm/ik/k3GdSBBWX3mvjEW7viDBQ2UnAnelLM531eiTLMFdKZvk/oNTVdxpuugTdMUsMav2yJKPrToumaz5GK185EG7ydKFO1jcSYxWvrSXLs7oZV+gcakA7TXQDIScv7Z6dobHNR4PHcbwDL3eO73TCotDFu0BNthIz+fONMMSj0FLv0qezo/fH2q87UHlFC06iCRq7nEa++OlaIze62cg5Erp1SRuP0KbZOi3mt4We+sbDTwSpor1Poq3dh+04Y83V/dGa+/uuSpf6GptMiHVE71dH70d0NlhffQhe6CB/5S4Oj3Qhl/IPMV3dGfhffdvvOvRhQ0yIUWPBlsTXKU9emMHvaHEs7LU/WJ7RNdloCkjFk7RQRUxMgkY2pPAFjr4o2iLa21xhzu20A6h2tcHHJ37M1z3roWkpEdLSyfLKerRlr6uoEc7gDIIvlrn7s0MLovz1Txs4dEG+vhAu6La4IKq3eH2YWGP+8+LjwWjkr1umqs/tv++5OZro/NPVWHla0DxXUsBlxoxdBmVcVb963TGdbMVT/JXH+NdLTSqgJnoyhQqTeqFJoooi16H/SGPSvErvPMr5aOXZ3+TJ72Phdkj8rTjs2g1adx1YfpcCx6pBZWjlztbmI4o21hc6BLG9mI57dRF2HuWw+vkVuh3oQOvj8ztX3fI7DO3g81vneMWLw/8xrOga495JWkdPkM0q+CiFRFrbr9bgqY5Uq06zkUE8XBIiHLxjsWDHZK5FJ2mskgXyWiKbCRmPruRDcXIp3Fu88hbaXLFDJJhx3FQKs+tGn+acR3zFamVk1fGbBUZMPRlaFQjZWLAvJmRYbuq80JG3QwM20mdFTZlp13omdowc7SuYQMMpoHRemwYGTzWGMDNA5AMn6jcA03TgWMAZ6JpBXpurgGciwaZxbNw/m8WmmZKw9ZKxx5noJXVVKENm49WmMWNwHqioKkrMWyx1jPrjyvnwuJeIrSeSGhhYVFmALHQ/ImlUh2HgOYNDskNIB6aHepQGEBE9NSo7oySGA7kjwyb0gCior8NG8CGoaI/hg1iw3DRrwobyIYho+m+rOsSbAxQ0f2JrnlqI6Ln6Yf+oX/o/w/9DwWyLwoZImi1AAAAAElFTkSuQmCC">
-                                <span>54</span>
-                            </div>
-                            <div>
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Simple_Comments.svg/1024px-Simple_Comments.svg.png">
-                                <span>${post.comments_count} </span>
-                            </div>
-                            <div>
-                                <img src="https://cdn.icon-icons.com/icons2/936/PNG/512/share-symbol_icon-icons.com_73418.png">
-                                <span>76</span>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    ${popp}
+                    ${edit}
                 </div>
+                <div class="imge-post" onclick="detailspost (${post.id})" style ="cursor: pointer;">
+                    <img  src=${imagee}>
+                </div>
+                <div class="body-post"  onclick="detailspost (${post.id})" style ="cursor: pointer;"> 
+                    <h4>${titleCont}</h4>
+                    <article>${post.body}</article>
+                </div>
+                <div class="actionsAndTags"> 
+                    <div class="actions">
+                        <div>
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHoAAAB6CAMAAABHh7fWAAAAYFBMVEUAAAD////p6ent7e35+fmHh4e9vb329vaLi4syMjI7OztnZ2dDQ0N0dHTi4uLz8/Ovr69hYWHR0dF8fHzIyMgLCwsqKipUVFQdHR3Z2dm2traioqIUFBRNTU2VlZVsbGxrIfkgAAADrklEQVRoge2a6baqMAyFW2aRWWVwfP+3vChO0Cktga51j/t/8gktdTcJodZEfugf+of+Y2gvdx3HzUPdrOEQ55mhPSeIbk2yads6vmx3RQbkh1nhby9x3babpLlFgSPkC9CVn5CJ6jRQg4O0nsYlfgVHeycm/ik/k3GdSBBWX3mvjEW7viDBQ2UnAnelLM531eiTLMFdKZvk/oNTVdxpuugTdMUsMav2yJKPrToumaz5GK185EG7ydKFO1jcSYxWvrSXLs7oZV+gcakA7TXQDIScv7Z6dobHNR4PHcbwDL3eO73TCotDFu0BNthIz+fONMMSj0FLv0qezo/fH2q87UHlFC06iCRq7nEa++OlaIze62cg5Erp1SRuP0KbZOi3mt4We+sbDTwSpor1Poq3dh+04Y83V/dGa+/uuSpf6GptMiHVE71dH70d0NlhffQhe6CB/5S4Oj3Qhl/IPMV3dGfhffdvvOvRhQ0yIUWPBlsTXKU9emMHvaHEs7LU/WJ7RNdloCkjFk7RQRUxMgkY2pPAFjr4o2iLa21xhzu20A6h2tcHHJ37M1z3roWkpEdLSyfLKerRlr6uoEc7gDIIvlrn7s0MLovz1Txs4dEG+vhAu6La4IKq3eH2YWGP+8+LjwWjkr1umqs/tv++5OZro/NPVWHla0DxXUsBlxoxdBmVcVb963TGdbMVT/JXH+NdLTSqgJnoyhQqTeqFJoooi16H/SGPSvErvPMr5aOXZ3+TJ72Phdkj8rTjs2g1adx1YfpcCx6pBZWjlztbmI4o21hc6BLG9mI57dRF2HuWw+vkVuh3oQOvj8ztX3fI7DO3g81vneMWLw/8xrOga495JWkdPkM0q+CiFRFrbr9bgqY5Uq06zkUE8XBIiHLxjsWDHZK5FJ2mskgXyWiKbCRmPruRDcXIp3Fu88hbaXLFDJJhx3FQKs+tGn+acR3zFamVk1fGbBUZMPRlaFQjZWLAvJmRYbuq80JG3QwM20mdFTZlp13omdowc7SuYQMMpoHRemwYGTzWGMDNA5AMn6jcA03TgWMAZ6JpBXpurgGciwaZxbNw/m8WmmZKw9ZKxx5noJXVVKENm49WmMWNwHqioKkrMWyx1jPrjyvnwuJeIrSeSGhhYVFmALHQ/ImlUh2HgOYNDskNIB6aHepQGEBE9NSo7oySGA7kjwyb0gCior8NG8CGoaI/hg1iw3DRrwobyIYho+m+rOsSbAxQ0f2JrnlqI6Ln6Yf+oX/o/w/9DwWyLwoZImi1AAAAAElFTkSuQmCC">
+                            <span>54</span>
+                        </div>
+                        <div>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Simple_Comments.svg/1024px-Simple_Comments.svg.png">
+                            <span>${post.comments_count} </span>
+                        </div>
+                        <div>
+                            <img src="https://cdn.icon-icons.com/icons2/936/PNG/512/share-symbol_icon-icons.com_73418.png">
+                            <span>76</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                ${popp}
+            </div>
 
-                `
-        }
-        //    <div class="tags">
-        //        <div><span> ${tagName[0]}</span></div>
-        //        <div><span> ${tagName[1]}</span></div>
-        //        <div><span> ${tagName[2]}</span></div>  
-        //   </div>
-        }).catch((eroor)=>{
-            console.log("error")
-            console.log(eroor)
-        })
+            `
+    }
+    //    <div class="tags">
+    //        <div><span> ${tagName[0]}</span></div>
+    //        <div><span> ${tagName[1]}</span></div>
+    //        <div><span> ${tagName[2]}</span></div>  
+    //   </div>
+    }).catch((eroor)=>{
+        console.log("error")
+        console.log(eroor)
+    }).finally( ()=>{
+        loaderToggle(false)
 
-        }
+    })
+
+    }
 // ===========show posts => end================================================
 
     </script>

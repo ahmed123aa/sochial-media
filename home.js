@@ -150,7 +150,7 @@ function closeModels (){
 closeModels()
 
 // *****************************************************
-// craet Post
+// craet Post && update
 function craetPost() {
     // ---------creat post => start by axios--------- 
         // baseUrl
@@ -166,11 +166,6 @@ function craetPost() {
             formData.append("title",title)
             formData.append("body",content)
             formData.append("image",fileImage)
-        // let body = {
-        //     "title":title,
-        //     "body":content,
-        // }
-            // full url to login
             let url =""
             let idPost =document.getElementById("hiddenForId").value
             if(idPost==null || idPost==""){
@@ -192,10 +187,17 @@ function craetPost() {
                 document.getElementById("model").style.visibility = "hidden"
                 document.getElementById("home").style.filter = "none"
                 // message => alert
-                message ("your post was created","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_wbBfnys5rxvgITJDUK-vKqPbaCW2rKSp-w&usqp=CAU")
-            //    read posts
+                if(idPost==null || idPost==""){
+                    message ("your post was created","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_wbBfnys5rxvgITJDUK-vKqPbaCW2rKSp-w&usqp=CAU")
+                }else{
+                    message ("your post was updated","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_wbBfnys5rxvgITJDUK-vKqPbaCW2rKSp-w&usqp=CAU")
+                    
+                }
+                //read posts
                 // readPost()
-                location.reload() 
+                setTimeout(() => {
+                    location.reload() 
+                }, 3000);
 
               
                 })
@@ -240,14 +242,15 @@ function  apearPoppSetting (count){
     // console.log(  document.getElementsByClassName("menuSetting").length)
 }
 // *****************************************************
-// update Post
+
+// update Post => apear model
 function update(Post){
     let Postt= JSON.parse(decodeURIComponent(Post))
     // console.log(Postt)
     // console.log( document.getElementsByClassName("titleModel").value)
-    if(localStorage.getItem("token") !==null)
+    // if(localStorage.getItem("token") !==null)
     // in console
-    console.log("you can")
+    console.log("you can update")
     // name publisher
         document.getElementById("namePublisher").innerText=JSON.parse(localStorage.getItem("userData")).name
     //    fill hiddenForId
@@ -266,22 +269,65 @@ function update(Post){
         document.getElementById("home").style.filter = "blur(3px)"
     }
 // *****************************************************
+    
+    // delete Post
+function deletePost (idPost){
+    // open model
+    document.getElementById("hiddenForIdDelete").value= idPost
+    document.getElementById("home").style.filter = "blur(3px)"
+    document.getElementsByClassName("model-delete")[0].style.visibility = "visible"
+    // confused content
+}
+// *****************************************************
 
+// delete Conform
+function deleteConform(){
+    let idPost =document.getElementById("hiddenForIdDelete").value
+    console.log(idPost)
+    let token =localStorage.getItem("token")
+    let baseUrl = "https://tarmeezacademy.com/api/v1/" 
+        url =`${baseUrl}posts/${idPost}` 
+        axios.delete(url,{
+            headers:{
+                "authorization": `Bearer ${token}`,
+            }
+        }).catch(function(error){
+            console.log(error)
+            message (data.message,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2odXc3DVvMonj_yuXb8q5kR0N-1ndG8Fv9VSufsUAf60UjwbOPkWZVbPmZVuOf3-PoB0&usqp=CAU")
+        })
+        .then(function(response){
+            console.log(response)
+            message ("your post was deleted","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_wbBfnys5rxvgITJDUK-vKqPbaCW2rKSp-w&usqp=CAU")
+            //read posts
+            // readPost()
+            setTimeout(() => {
+                location.reload() 
+            }, 3000);
+
+        })
+    
+
+}
+// *****************************************************
+function closModelDelete (){
+    document.getElementsByClassName("model-delete")[0].style.cssText ="visibility:hidden;"
+    document.getElementById("home").style.filter = "none"
+
+}
+// close Setting
 function closeSetting(){ 
     document.getElementsByClassName("menuSetting")[countCurrent].style.cssText ="visibility:hidden;"
 }
 // *****************************************************
-// setting Popp
 let edit =""
 let popp =""
-function settingPopp(post){
-    
+function settingPopp (post,co){
     if(localStorage.getItem("token") !==null){
     if(post.author.id==JSON.parse(localStorage.getItem("userData")).id){
-        edit=`<img id="threeLines" class="threeLines"  onclick="apearPoppSetting ()" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEI8WPzGIYKhyNogTncG7fYhEW-1UOTi8YvA&usqp=CAU">`
+        edit=`<img id="threeLines" class="threeLines"  onclick="apearPoppSetting (${co})" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEI8WPzGIYKhyNogTncG7fYhEW-1UOTi8YvA&usqp=CAU">`
         popp=`
             <div style ="visibility: hidden;" id ="menuSetting" class="menuSetting">
-                <div class="deleteCont">
+                <div class="deleteCont"  onclick="deletePost('${post.id}')">
                     <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4EMnEciew_onpMaTiS2xtPZxPlw4upCFNpQ&usqp=CAU">
                     <span>delete</span>
                 </div>
@@ -295,9 +341,18 @@ function settingPopp(post){
                 </div>
                 <span onclick="closeSetting()" class ="closeSetting"> x</span>
             </div>
-        
-        `
+            
+            `
+            // <input type="hidden" value="${count}">
     }   
+    }  
+}
 
-    }
+// *****************************************************
+
+function goToProfile(id){
+    window.location=`./profile.html?id=${id}`
+}
+function myProfile(){
+    window.location=`./profile.html?id=${JSON.parse(localStorage.getItem("userData")).id}`
 }

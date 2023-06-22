@@ -1,0 +1,143 @@
+header{
+    justify-content: space-between;
+}
+.all-content{
+    margin-top: 50px;
+    margin-left: 35%;
+    width: 65%;
+    min-height: 100vh;
+    /* background-color: red; */
+    display: flex;
+}
+.content-info-cont{
+    width: 70%;
+    min-height:600px ;
+    /* background-color: white; */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.message{
+    width: 30%;
+    /* background-color: black; */
+    height: 200px;
+}
+.infoUser{
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    width: 100%;
+    height: 300px;
+    background-color: white;
+    display: grid;
+    grid-template-areas: 
+    "backgroundd backgroundd backgroundd backgroundd "
+    "backgroundd backgroundd backgroundd backgroundd "
+    "backgroundd backgroundd backgroundd backgroundd "
+    "backgroundd backgroundd backgroundd backgroundd "
+    "backgroundd backgroundd backgroundd backgroundd "
+    "backgroundd backgroundd backgroundd backgroundd "
+    "backgroundd backgroundd backgroundd backgroundd "
+    "backgroundd backgroundd backgroundd backgroundd "
+    ". . . setting"
+    " ddetails  . . ."
+    " ddetails  . . ."
+    "trans trans trans trans "
+}
+.content{
+    width: 100%;
+    min-height: 300px;
+    /* background-color: darkgreen; */
+
+}
+.background{
+    position: relative;
+    grid-area: backgroundd;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-image: url("file:///C:/Users/Black%20Horse/Downloads/Medical%20Travel%20International.jpg");
+}
+.ddetails{
+    /* background-color: fuchsia; */
+    grid-area:ddetails ;
+    padding-left:20px;
+    text-transform: capitalize;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+.ddetails p:nth-child(2),.ddetails .parent >span{
+    font-size: 13px;
+    color: rgb(75, 75, 75);
+}
+.ddetails p:nth-child(1){
+    margin-top: 20px;
+}
+.ddetails p:nth-child(2){
+    padding-top:3px;
+}
+.parent{
+    padding-top: 5px;
+    width: 100%;
+    height: 30px;
+    /* background-color: red; */
+}
+.spechial{
+    font-size: 16px;
+    color:black;
+}
+.setting{
+    /* background-color: gray; */
+    grid-area: setting;
+    display: flex;
+    align-items: flex-end;
+}
+.setting button{
+    color: white;
+    background-color: var(--buttons);
+    width: 63%;
+    height: 35px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    /* border: 2px solid var(--buttons); */
+}
+.trans{
+    /* background-color: firebrick; */
+    grid-area: trans;
+    display: flex;  
+    /* justify-content: space-evenly; */
+    
+}
+.trans div{
+    text-align: center;
+    width: 25%;
+    /* background-color: red; */
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.imge-profilee{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    background-color: white;
+    transform: translate(0,-50%);
+    border-radius: 50%;
+    border: 2px solid white;
+}
+.imge-profilee img{
+    width: 100%;
+    height: 100%;
+}
+.activee{
+    color: var(--buttons) ;
+    border-bottom: 3px solid var(--buttons);
+}
+.cont-post-profile{
+    margin-top: 15px;
+}
