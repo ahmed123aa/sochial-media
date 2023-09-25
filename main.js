@@ -26,7 +26,7 @@ function goToLogin () {
 
     login.addEventListener("click",()=>{
     
-        location.href= "../login and rigester/login.html"
+        location.href= "../social/login.html"
     })
 }
 if(login !=undefined){
@@ -63,8 +63,16 @@ function loginLogoutButtom(){
             }
             document.getElementById("imge-prof").src =emptyObject
             document.getElementById("userName").textContent =`@${JSON.parse(localStorage.getItem("userData")).username}`
+            if(document.getElementById("yourStory")!=undefined){
+                document.getElementById("yourStory").src =emptyObject
+            }
+            if(document.getElementById("imge-proff")!=undefined){
+                document.getElementById("imge-proff").src =emptyObject
+            }
+            if(document.getElementById("image-comint")!=undefined){
+                document.getElementById("image-comint").src =emptyObject
+            }
             console.log(emptyObject)
-            
         }
     }else{
         document.getElementById("login").style.display = "block" 
@@ -125,7 +133,7 @@ function creatPost (){
         // in console
         console.log("you can not")
         // go to login first
-        location.href= "../login and rigester/login.html"
+        location.href= "../social/login.html"
 
     }
 }
@@ -227,7 +235,7 @@ checkElementCreatInPage()
 // details post
 function detailspost (idPost) {
     console.log(idPost)
-    location = `../login and rigester/detailsPost.html?idPost=${idPost}`
+    location = `../social/detailsPost.html?idPost=${idPost}`
 }
 // *****************************************************
 
@@ -349,10 +357,45 @@ function settingPopp (post,co){
 }
 
 // *****************************************************
-
+// go To any Profile
 function goToProfile(id){
     window.location=`./profile.html?id=${id}`
 }
+
+// *****************************************************
+// go to my Profile
 function myProfile(){
     window.location=`./profile.html?id=${JSON.parse(localStorage.getItem("userData")).id}`
 }
+
+
+
+
+
+
+
+
+
+
+function craetPost() {
+        //Url
+            let Url = "example: https://tarmeezacademy.com/api/v1/" 
+            let fileImage = document.getElementById("the elemnt id").files[0]    
+            let token = "enter your token"
+            // formData =>body params
+            let formData = new FormData()
+            formData.append("the name of body param",fileImage)
+            axios.post(Url,formData,{
+                headers:{
+                "authorization": `Bearer ${token}`,
+                }
+            }).then(response=>{
+                console.log(response)
+                })
+                .catch(data=>{
+                    console.log(data)
+            })
+       
+    }
+   
+

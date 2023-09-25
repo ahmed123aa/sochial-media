@@ -108,12 +108,13 @@ function infoProfile(id){
             // console.log(user)
             document.getElementById("nameProfile").textContent=user.username
             document.getElementById("emailProfile").textContent=user.email
-            let imgeProfile =  document.getElementById("imge-proff").src
+            let imgeProfile
             if (isObjEmptyPictureProfile (user.profile_image)) {
                 imgeProfile ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05q_vg5Ux_rPqNDBBeYLc1BHrG-qjaw7_tA&usqp=CAU"                 
             }else{
                 imgeProfile =user.profile_image
             }
+            document.getElementById("imge-pro-page").src=imgeProfile
             document.getElementsByClassName("spechial")[0].textContent=user.posts_count
             document.getElementsByClassName("spechial")[1].textContent=user.comments_count
         })

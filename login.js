@@ -93,7 +93,7 @@ e.addEventListener("click", () =>{
         // console.log(response.data)
         localStorage.setItem("token",response.data.token)
         localStorage.setItem("userData",JSON.stringify(response.data.user))
-        location.href= "../login and rigester/home.html"
+        location.href= "../social/index.html"
         })
     .catch(error=>{
         console.log(error)

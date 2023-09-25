@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
-    <link rel="stylesheet" href="../login and rigester/login&register.css">
-    <script src="../login and rigester/node_modules/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../social/login&register.css">
+    <script src="../social/node_modules/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
@@ -26,7 +26,7 @@
         </div>
         <div>
             <button id="login">login</button>
-            <span>do not have an account?<a href="../login and rigester/rigster.html"> signup</a></span>
+            <span>do not have an account?<a href="../social/rigster.html"> signup</a></span>
         </div>
         <div>
           <div>
@@ -81,7 +81,7 @@
             // console.log(response.data)
             localStorage.setItem("token",response.data.token)
             localStorage.setItem("userData",JSON.stringify(response.data.user))
-            location.href= "../login and rigester/home.html"
+            location.href= "../social/index.html"
             })
             .catch(data=>{
                 console.log(data)
@@ -94,6 +94,6 @@
 
     
     </script>
-    <script src="../login and rigester/login.js"></script>
+    <script src="../social/login.js"></script>
 </body>
 </html>

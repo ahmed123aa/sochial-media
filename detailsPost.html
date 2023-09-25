@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>details post</title>
        <!-- file css -->
-       <link rel="stylesheet" href="../login and rigester/home.css">
+       <link rel="stylesheet" href="../social/home.css">
        <!-- fonts.google -->
        <link href="https://fonts.googleapis.com/css2?family=BhuTuka+Expanded+One&family=Dancing+Script&display=swap" rel="stylesheet"> 
           <!-- axios -->
-       <script src="../login and rigester/node_modules/axios/dist/axios.min.js"></script>
+       <script src="../social/node_modules/axios/dist/axios.min.js"></script>
 
 </head>
 <body>
@@ -47,7 +47,7 @@
                     <div class="active">
                         <div> 
                             <img class="icon-sidbar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2jJLJQFoxc79zQra4uW1An_5uCbJC4XFm-A&usqp=CAU" >
-                            <a href="../login and rigester/home.html"><span>home</span></a>
+                            <a href="../social/index.html"><span>home</span></a>
                         </div>
                     </div>
                     <div>
@@ -162,6 +162,7 @@
     id =url.get("idPost")  
     function readPost() {
     // Requests => show details the post
+    var emptyObject = JSON.parse(localStorage.getItem("userData")).profile_image;
     let baseUrl = "https://tarmeezacademy.com/api/v1/posts"
     axios.get(baseUrl+"/"+id)
     .then(function (response) {
@@ -250,6 +251,7 @@
     if(localStorage.getItem("token") !==null){
         console.log(document.getElementById("commentCreat"))
         document.getElementById("commentCreat").style.visibility = "visible"
+        document.getElementById("image-comint").src =emptyObject
     }
     console.log(document.querySelector(".countner >div"))
     console.log(document.getElementsByClassName("menuSetting").length)
@@ -281,6 +283,6 @@
     }
    
 </script>
-<script src="../login and rigester/main.js"></script>
+<script src="../social/main.js"></script>
 </body>
 </html>
